@@ -1,12 +1,12 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Formik, FormikProps } from "formik";
 import * as Yup from "yup";
 import moment from "moment";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-import { useAppDispatch } from "../../app/store/hooks";
-import { createTask } from "../../app/features/task/taskActions";
+import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
+import { createTask, fetchTasks } from "../../app/features/task/taskActions";
 
 export interface ITaskFormikProps {
   title: string;
@@ -19,6 +19,7 @@ const initialTaskValues: ITaskFormikProps = {
 };
 
 const TaskForm: React.FC = () => {
+  const tasks = useAppSelector((state) => state.task.tasks);
   const dispatch = useAppDispatch();
   const taskFormikRef = useRef<FormikProps<ITaskFormikProps>>(null);
 
@@ -33,8 +34,15 @@ const TaskForm: React.FC = () => {
     dispatch(createTask(values));
   };
 
+  useEffect(() => {
+    dispatch(fetchTasks());
+  }, []);
+
+  const taskList = tasks.map((task, i) => <p key={i}>{task.title}</p>);
+
   return (
     <div>
+      <div>{taskList}</div>
       <Formik
         innerRef={taskFormikRef}
         validationSchema={taskFormikSchema}

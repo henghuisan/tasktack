@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Task } from "../../interfaces"
-import { createTask } from './taskActions';
+import { createTask, fetchTasks } from './taskActions';
 
 export interface TaskState {
     tasks: Task[];
@@ -20,6 +20,18 @@ const taskSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+            .addCase(fetchTasks.pending, (state) => {
+                state.loading = 'pending';
+                state.error = null;
+            })
+            .addCase(fetchTasks.fulfilled, (state, action) => {
+                state.tasks = action.payload;
+                state.loading = 'succeeded';
+            })
+            .addCase(fetchTasks.rejected, (state, action) => {
+                state.loading = 'failed';
+                state.error = action.payload || 'Failed to fetch tasks';
+            })
             .addCase(createTask.pending, (state) => {
                 state.loading = 'pending';
                 state.error = null;
