@@ -19,12 +19,7 @@ export const fetchTasks = createAsyncThunk<Task[], void, { rejectValue: string }
 
 export const createTask = createAsyncThunk<string, Task, { rejectValue: string }>('createTasks', async (task, { rejectWithValue }) => {
     try {
-        const response = await fetch("http://localhost:8000/api/task");
-        if (!response.ok) {
-            throw new Error('Failed to fetch issues.');
-        }
-        const data = await response.json();
-        console.log(task)
+        const response = await axios.post('/tasks/', task);
         return 'response';
     } catch (error) {
         return rejectWithValue("Failed to fetch issues.");
