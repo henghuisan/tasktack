@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -75,7 +77,8 @@ TEMPLATES = [
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000'
+    "http://localhost:3000",
+    "https://todo-list-five-sooty.vercel.app/",
 ]
 
 WSGI_APPLICATION = "backend.wsgi.application"
@@ -93,14 +96,14 @@ WSGI_APPLICATION = "backend.wsgi.application"
 #     }
 # }
 DATABASES = {
-        'default': {
-            'ENGINE': 'djongo',
-            'NAME': os.environ.get("MONGO_DB_NAME"),
-            'ENFORCE_SCHEMA': os.environ.get("MONGO_DB_ENFORCE_SCHEMA"),
-            'CLIENT': {
-                'host': os.environ.get("MONGO_DB_URI"),
-            }  
-        }
+    "default": {
+        "ENGINE": "djongo",
+        "NAME": os.environ.get("MONGO_DB_NAME"),
+        "ENFORCE_SCHEMA": os.environ.get("MONGO_DB_ENFORCE_SCHEMA"),
+        "CLIENT": {
+            "host": os.environ.get("MONGO_DB_URI"),
+        },
+    }
 }
 
 
