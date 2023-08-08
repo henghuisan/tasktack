@@ -28,16 +28,17 @@ const TaskForm: React.FC = () => {
       .required("*Title is required"),
   });
 
-  console.log(tasks)
   const submitTaskFormikHandler = (values: ITaskFormikProps) => {
     console.log(values);
     dispatch(createTask(values));
   };
-
+  
   useEffect(() => {
     dispatch(fetchTasks());
   }, [dispatch]);
-
+  
+  console.log('hey')
+  console.log(tasks)
   const taskList = tasks.map((task, i) => <p key={i}>{task.title}</p>);
 
   return (
