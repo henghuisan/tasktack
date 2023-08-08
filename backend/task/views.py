@@ -2,9 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .serializers import TaskSerializer
 from .models import Task
-
 from datetime import datetime
-
 from django.http import HttpResponse
 
 # Create your views here.
@@ -19,7 +17,7 @@ def index(request):
     html = f'''
     <html>
         <body>
-            <h1>Hello from Vercel!</h1>
+            <h1>Hello from Grace! Test static</h1>
             <p>The current time is { now }.</p>
         </body>
     </html>
