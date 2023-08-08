@@ -5,22 +5,24 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
-import { createTask, fetchTasks } from "../../app/features/task/taskActions";
+import {
+  createTask,
+  deleteTask,
+  fetchTasks,
+  getTask,
+  updateTask,
+} from "../../app/features/task/taskActions";
+import { Task } from "../../app/interfaces";
 
-export interface ITaskFormikProps {
-  title: string;
-  note: string;
-}
-
-const initialTaskValues: ITaskFormikProps = {
+const initialTaskValues: Task = {
   title: "",
   note: "",
 };
 
 const TaskForm: React.FC = () => {
-  const tasks = useAppSelector((state) => state.task.tasks);
+  const { task, tasks } = useAppSelector((state) => state.task);
   const dispatch = useAppDispatch();
-  const taskFormikRef = useRef<FormikProps<ITaskFormikProps>>(null);
+  const taskFormikRef = useRef<FormikProps<Task>>(null);
 
   const taskFormikSchema = Yup.object().shape({
     title: Yup.string()
@@ -28,22 +30,28 @@ const TaskForm: React.FC = () => {
       .required("*Title is required"),
   });
 
-  const submitTaskFormikHandler = (values: ITaskFormikProps) => {
-    console.log(values);
-    dispatch(createTask(values));
+  const submitTaskFormikHandler = (values: Task) => {
+    // dispatch(createTask(values));
+    const id = 1;
+    // dispatch(updateTask(values));
+    // dispatch(deleteTask(id.toString()));
+    dispatch(getTask(id.toString()));
   };
-  
+
   useEffect(() => {
     dispatch(fetchTasks());
   }, [dispatch]);
-  
-  console.log('hey')
-  console.log(tasks)
-  const taskList = tasks.map((task, i) => <p key={i}>{task.title}</p>);
+
+  const taskList =
+    tasks.length > 0
+      ? tasks.map((task, i) => <p key={i}>{task.title}</p>)
+      : "empty task list";
 
   return (
     <div>
       <div>{taskList}</div>
+      <hr />
+      {task.title}
       <Formik
         innerRef={taskFormikRef}
         validationSchema={taskFormikSchema}

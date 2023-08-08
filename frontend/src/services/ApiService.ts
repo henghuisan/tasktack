@@ -21,8 +21,8 @@ class ApiService {
     }
 
 public static post(resource: string,
-        params: any): Promise<AxiosResponse> {
-        return axios.post(`${resource}`, params);
+        params: AxiosRequestConfig): Promise<AxiosResponse> {
+        return axios.post(`${resource}/`, params);
     }
 
     public static put(resource: string,

@@ -4,8 +4,6 @@ import thunkMiddleware from 'redux-thunk';
 import rootReducer from './reducers'
 import ApiService from '../../services/ApiService';
 
-console.log("production: " + process.env.NODE_ENV)
-console.log(process.env.REACT_APP_BASE_API_URL as string)
 ApiService.init(process.env.REACT_APP_BASE_API_URL as string)
 
 const store = configureStore({
