@@ -34,14 +34,14 @@ const TaskForm: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchTasks());
+    // dispatch(fetchTasks());
   }, [dispatch]);
 
-  const taskList = tasks.map((task, i) => <p key={i}>{task.title}</p>);
+  // const taskList = tasks.map((task, i) => <p key={i}>{task.title}</p>);
 
   return (
     <div>
-      <div>{taskList}</div>
+      {/* <div>{taskList}</div> */}
       <Formik
         innerRef={taskFormikRef}
         validationSchema={taskFormikSchema}
