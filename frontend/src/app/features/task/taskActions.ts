@@ -1,13 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import axios, { AxiosError } from "axios";
 import { Task } from "../../interfaces"
+import ApiService from "../../../services/ApiService";
+
 
 export const fetchTasks = createAsyncThunk<Task[], void, { rejectValue: string }>(
     'fetchTasks',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.get('/tasks/');
-            return response.data;
+            const { data } = await ApiService.get("tasks");
+            return data;
         } catch (error) {
             if (error instanceof AxiosError) {
                 return rejectWithValue(error.message);
@@ -20,6 +22,7 @@ export const fetchTasks = createAsyncThunk<Task[], void, { rejectValue: string }
 export const createTask = createAsyncThunk<string, Task, { rejectValue: string }>('createTasks', async (task, { rejectWithValue }) => {
     try {
         const response = await axios.post('/tasks/', task);
+        console.log(response)
         return 'response';
     } catch (error) {
         return rejectWithValue("Failed to fetch issues.");

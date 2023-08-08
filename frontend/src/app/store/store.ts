@@ -4,7 +4,7 @@ import thunkMiddleware from 'redux-thunk';
 import rootReducer from './reducers'
 import ApiService from '../../services/ApiService';
 
-ApiService.init("")
+ApiService.init("http://127.0.0.1:8000/api/")
 
 const store = configureStore({
     reducer: rootReducer,

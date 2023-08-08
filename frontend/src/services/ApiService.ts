@@ -5,8 +5,8 @@ import JwtService from "./JwtService";
 
 class ApiService {
     public static init(baseURL: string) {
-        // axios.defaults.baseURL = baseURL;
-        axios.defaults.baseURL = "https://todo-list-five-sooty.vercel.app/api/";
+        axios.defaults.baseURL = baseURL;
+        // axios.defaults.baseURL = "https://todo-list-five-sooty.vercel.app/api/";
         axios.defaults.headers.common["Accept"] =
             "application/json";
     }

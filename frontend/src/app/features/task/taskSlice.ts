@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { Task } from "../../interfaces"
 import { createTask, fetchTasks } from './taskActions';
 
@@ -27,6 +27,7 @@ const taskSlice = createSlice({
             .addCase(fetchTasks.fulfilled, (state, action) => {
                 state.tasks = action.payload;
                 state.loading = 'succeeded';
+                console.log(action.payload)
             })
             .addCase(fetchTasks.rejected, (state, action) => {
                 state.loading = 'failed';

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Formik, FormikProps } from "formik";
 import * as Yup from "yup";
-import moment from "moment";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
@@ -36,7 +35,7 @@ const TaskForm: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchTasks());
-  }, []);
+  }, [dispatch]);
 
   const taskList = tasks.map((task, i) => <p key={i}>{task.title}</p>);
 

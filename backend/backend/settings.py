@@ -12,9 +12,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-from dotenv import load_dotenv
+# import dotenv
 
-load_dotenv()
+# dotenv.load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-ou(fxn#f14+@x7-kd0)*svqg(rx3lokx!^op(x83ycv6th0kd#"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 
 # Application definition
@@ -78,7 +78,7 @@ TEMPLATES = [
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
-    "https://todo-list-five-sooty.vercel.app/",
+    "https://todo-list-five-sooty.vercel.app",
 ]
 
 WSGI_APPLICATION = "backend.wsgi.application"
@@ -98,10 +98,10 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "djongo",
-        "NAME": os.environ.get("MONGO_DB_NAME"),
-        "ENFORCE_SCHEMA": os.environ.get("MONGO_DB_ENFORCE_SCHEMA"),
+        "NAME": "Todo-List",
+        "ENFORCE_SCHEMA": False,
         "CLIENT": {
-            "host": os.environ.get("MONGO_DB_URI"),
+            "host": "mongodb+srv://grace_hsan:000111010018@cluster0.ei4z0.mongodb.net/Todo-List?retryWrites=true&w=majority",
         },
     }
 }
