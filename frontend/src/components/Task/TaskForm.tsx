@@ -28,6 +28,7 @@ const TaskForm: React.FC = () => {
       .required("*Title is required"),
   });
 
+  console.log(tasks)
   const submitTaskFormikHandler = (values: ITaskFormikProps) => {
     console.log(values);
     dispatch(createTask(values));
