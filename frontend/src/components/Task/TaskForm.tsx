@@ -1,115 +1,71 @@
-import React, { useEffect, useRef } from "react";
-import { Formik, FormikProps } from "formik";
-import * as Yup from "yup";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Button from "react-bootstrap/Button";
+import React from "react";
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import InputAdornment from "@mui/material/InputAdornment";
+import AddIcon from "@mui/icons-material/Add";
+import grey from "@mui/material/colors/grey";
+import TaskFormDueDatePicker from "./TaskFormDueDatePicker";
+import TaskFormDropDown from "./TaskFormDropdown";
 import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
-import {
-  createTask,
-  deleteTask,
-  fetchTasks,
-  getTask,
-  updateTask,
-} from "../../app/features/task/taskActions";
-import { Task } from "../../app/interfaces";
-
-const initialTaskValues: Task = {
-  title: "",
-  note: "",
-};
+import { createTask, fetchTasks } from "../../app/features/task/taskActions";
+import { TaskFormData } from "../../app/interfaces";
+import { resetForm, setTitle } from "../../app/features/task/taskSlice";
 
 const TaskForm: React.FC = () => {
-  const { task, tasks } = useAppSelector((state) => state.task);
   const dispatch = useAppDispatch();
-  const taskFormikRef = useRef<FormikProps<Task>>(null);
+  const { taskFormData } = useAppSelector((state) => state.task);
 
-  const taskFormikSchema = Yup.object().shape({
-    title: Yup.string()
-      .max(100, "*Title can't be longer than 100 characters")
-      .required("*Title is required"),
-  });
-
-  const submitTaskFormikHandler = (values: Task) => {
-    // dispatch(createTask(values));
-    const id = 1;
-    // dispatch(updateTask(values));
-    // dispatch(deleteTask(id.toString()));
-    dispatch(getTask(id.toString()));
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setTitle(e.target.value));
   };
 
-  useEffect(() => {
-    dispatch(fetchTasks());
-  }, [dispatch]);
+  const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const { title, due_date } = taskFormData;
 
-  const taskList =
-    tasks.length > 0
-      ? tasks.map((task, i) => <p key={i}>{task.title}</p>)
-      : "empty task list";
+    if (e.key === "Enter" && title!.trim() !== "") {
+      e.preventDefault();
+      // console.log("Form submitted:", taskFormData);
+      const formData: TaskFormData = {
+        ...taskFormData,
+        due_date: due_date && new Date(due_date),
+      };
+      dispatch(createTask(formData)).then(() => {
+        dispatch(fetchTasks());
+        dispatch(resetForm());
+      });
+    }
+  };
 
   return (
-    <div>
-      <div>{taskList}</div>
-      <hr />
-      {task.title}
-      <Formik
-        innerRef={taskFormikRef}
-        validationSchema={taskFormikSchema}
-        onSubmit={submitTaskFormikHandler}
-        initialValues={initialTaskValues}
-      >
-        {({
-          handleSubmit,
-          handleChange,
-          setFieldValue,
-          resetForm,
-          values,
-          errors,
-          isSubmitting,
-        }) => (
-          <Form noValidate onSubmit={handleSubmit}>
-            <InputGroup>
-              <Form.Control
-                name="title"
-                value={values.title}
-                placeholder="Write your title here."
-                onChange={handleChange}
-                isInvalid={!!errors.title}
-              />
-
-              {/* <Form.Control
-                name="note"
-                as="textarea"
-                value={values.note}
-                placeholder="Write task note here."
-                onChange={handleChange}
-              /> */}
-
-              <Button
-                variant="outline-primary"
-                type="submit"
-                disabled={isSubmitting}
-              >
-                Create
-              </Button>
-              <Button
-                variant="outline-primary"
-                type="reset"
-                onClick={() => {
-                  resetForm();
-                  setFieldValue("note", ""); // Clear the 'note' field manually
-                }}
-              >
-                x
-              </Button>
-              <Form.Control.Feedback type="invalid">
-                {errors.title}
-              </Form.Control.Feedback>
-            </InputGroup>
-          </Form>
-        )}
-      </Formik>
-    </div>
+    <Paper
+      component="form"
+      sx={{
+        ml: 2,
+        mr: 3,
+        display: "flex",
+        alignItems: "center",
+        backgroundColor: grey[100],
+        boxShadow: "none",
+      }}
+    >
+      <InputBase
+        placeholder='Add task to "Inbox", press Enter to save.'
+        inputProps={{ "aria-label": "enter task" }}
+        startAdornment={
+          <InputAdornment position="start">
+            <AddIcon sx={{ color: grey[500] }} />
+          </InputAdornment>
+        }
+        value={taskFormData.title}
+        onChange={handleTitleChange}
+        onKeyDown={handleSubmit}
+        sx={{ ml: 1, flex: 1, fontSize: 14 }}
+      />
+      <TaskFormDueDatePicker />
+      <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+      <TaskFormDropDown />
+    </Paper>
   );
 };
 

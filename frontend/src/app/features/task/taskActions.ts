@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import axios, { AxiosError } from "axios";
-import { Task } from "../../interfaces"
-import ApiService from "../../../services/ApiService";
+import { Task, TaskFormData } from "../../interfaces"
 
 
 export const fetchTasks = createAsyncThunk<Task[], void, { rejectValue: string }>('fetchTasks', async (_, { rejectWithValue }) => {
@@ -19,7 +18,6 @@ export const fetchTasks = createAsyncThunk<Task[], void, { rejectValue: string }
 export const getTask = createAsyncThunk<Task, string, { rejectValue: string }>('getTask', async (id, { rejectWithValue }) => {
     try {
         const { data } = await axios.get(`tasks/${id}/`);
-        console.log(data)
         return data;
     } catch (error) {
         if (error instanceof AxiosError) {
@@ -29,7 +27,7 @@ export const getTask = createAsyncThunk<Task, string, { rejectValue: string }>('
     }
 })
 
-export const createTask = createAsyncThunk<void, Task, { rejectValue: string }>('createTask', async (task, { rejectWithValue }) => {
+export const createTask = createAsyncThunk<void, TaskFormData, { rejectValue: string }>('createTask', async (task, { rejectWithValue }) => {
     try {
         await axios.post("tasks/", task);
     } catch (error) {
@@ -41,9 +39,10 @@ export const createTask = createAsyncThunk<void, Task, { rejectValue: string }>(
 })
 
 
-export const updateTask = createAsyncThunk<void, Task, { rejectValue: string }>('updateTask', async (task, { rejectWithValue }) => {
+export const updateTask = createAsyncThunk<Task, Task, { rejectValue: string }>('updateTask', async (task, { rejectWithValue }) => {
     try {
-        await axios.put(`tasks/${task.id}/`, task);
+        const { data } = await axios.put(`tasks/${task.id}/`, task);
+        return data;
     } catch (error) {
         if (error instanceof AxiosError) {
             return rejectWithValue(error.message);
