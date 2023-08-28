@@ -1,6 +1,5 @@
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import HelpIcon from "@mui/icons-material/Help";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
@@ -22,19 +21,14 @@ import { MenuListItem, PrioriyListItem } from "../../app/interfaces";
 
 export const ListAFromSidebar: MenuListItem[] = [
   {
-    title: "Task",
-    key: "task",
+    title: "Tasks",
+    key: "tasks",
     icon: CheckBoxIcon,
   },
   {
     title: "Calendar",
     key: "calendar",
     icon: CalendarMonthIcon,
-  },
-  {
-    title: "Search",
-    key: "search",
-    icon: SearchIcon,
   },
 ];
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
@@ -7,14 +7,24 @@ import AddIcon from "@mui/icons-material/Add";
 import grey from "@mui/material/colors/grey";
 import TaskFormDueDatePicker from "./TaskFormDueDatePicker";
 import TaskFormDropDown from "./TaskFormDropdown";
+import dayjs from "dayjs";
 import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
 import { createTask, fetchTasks } from "../../app/features/task/taskActions";
 import { TaskFormData } from "../../app/interfaces";
-import { resetForm, setTitle } from "../../app/features/task/taskSlice";
+import {
+  resetForm,
+  setDueDate,
+  setTitle,
+} from "../../app/features/task/taskSlice";
+import { useLocation } from "react-router-dom";
 
 const TaskForm: React.FC = () => {
   const dispatch = useAppDispatch();
+  const [taskFormPlaceholder, setTaskFormPlaceholder] = useState<string>(
+    'Add task to "Inbox", press Enter to save.'
+  );
   const { taskFormData } = useAppSelector((state) => state.task);
+  let location = useLocation();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setTitle(e.target.value));
@@ -37,6 +47,18 @@ const TaskForm: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const pathSegments = location.pathname.split("/");
+    const lastPathSegment = pathSegments[pathSegments.length - 1];
+
+    if (lastPathSegment == "today" || lastPathSegment == "week") {
+      dispatch(setDueDate(dayjs().format("MM/DD/YYYY")));
+      setTaskFormPlaceholder('Add task to "Inbox" on "Today"');
+    } else {
+      setTaskFormPlaceholder('Add task to "Inbox", press Enter to save.');
+    }
+  }, [dispatch, location, setTaskFormPlaceholder]);
+
   return (
     <Paper
       component="form"
@@ -50,7 +72,7 @@ const TaskForm: React.FC = () => {
       }}
     >
       <InputBase
-        placeholder='Add task to "Inbox", press Enter to save.'
+        placeholder={taskFormPlaceholder}
         inputProps={{ "aria-label": "enter task" }}
         startAdornment={
           <InputAdornment position="start">

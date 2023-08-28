@@ -1,9 +1,10 @@
-import * as React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import MenuIcon from "@mui/icons-material/Menu";
 import SortIcon from "@mui/icons-material/Sort";
@@ -16,6 +17,14 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ handleMenu, open }: HeaderProps) => {
+  const [sortAnchorEl, setSortAnchorEl] = useState<HTMLButtonElement | null>(
+    null
+  );
+  const [filterAnchorEl, setFilterAnchorEl] =
+    useState<HTMLButtonElement | null>(null);
+  const openSortPopover = Boolean(sortAnchorEl);
+  const openFilterPopover = Boolean(filterAnchorEl);
+
   return (
     <AppBar
       position="static"
@@ -44,15 +53,51 @@ const Header: React.FC<HeaderProps> = ({ handleMenu, open }: HeaderProps) => {
         </Typography>
         <>
           <Tooltip title="Sort" placement="bottom">
-            <IconButton color="inherit">
+            <IconButton
+              color="inherit"
+              aria-describedby="sortPopover"
+              onClick={(e) => setSortAnchorEl(e.currentTarget)}
+            >
               <SortIcon />
             </IconButton>
           </Tooltip>
+          <Popover
+            id="sortPopover"
+            open={openSortPopover}
+            anchorEl={sortAnchorEl}
+            onClose={() => setSortAnchorEl(null)}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+          >
+            <Typography sx={{ p: 2, fontSize: "13px" }}>
+              Sorry, this function is not ready yet.
+            </Typography>
+          </Popover>
           <Tooltip title="More" placement="bottom">
-            <IconButton color="inherit">
+            <IconButton
+              color="inherit"
+              aria-describedby="filterPopover"
+              onClick={(e) => setFilterAnchorEl(e.currentTarget)}
+            >
               <MoreHorizIcon />
             </IconButton>
           </Tooltip>
+          <Popover
+            id="filterPopover"
+            open={openFilterPopover}
+            anchorEl={filterAnchorEl}
+            onClose={() => setFilterAnchorEl(null)}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+          >
+            <Typography sx={{ p: 2, fontSize: "13px" }}>
+              Sorry, this function is not ready yet.
+            </Typography>
+          </Popover>
         </>
       </Toolbar>
     </AppBar>

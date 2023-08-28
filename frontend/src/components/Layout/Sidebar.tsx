@@ -12,22 +12,32 @@ const Sidebar: React.FC = () => {
   return (
     <Drawer
       sx={{
-        width: 55,
-        flexShrink: 0,
+        width: 60,
         zIndex: theme.zIndex.drawer,
+        display: "flex", // Use flex display
+        flexDirection: "column", // Stack children vertically
+        justifyContent: "center", // Center content vertically
+        alignItems: "center", // Center content horizontally
         "& .MuiDrawer-paper": {
-          width: 55,
+          width: 60,
           boxSizing: "border-box",
           overflowX: "hidden", // Hide horizontal overflow
           bgcolor: "#263238",
+          display: "flex", // Use flex display for internal content
+          flexDirection: "column", // Stack internal content vertically
+          alignItems: "center", // Center internal content horizontally
+          py: 2,
         },
+        // "& .MuiListItem-root:hover": {
+        //   backgroundColor: "#1976D2", // Slightly darkened shade of your primary color
+        // },
       }}
       variant="permanent"
       anchor="left"
     >
       <Avatar
         alt="avatar"
-        sx={{ width: 28, height: 28, mx: 2, mt: 2 }}
+        sx={{ width: 32, height: 32 }}
         src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1600"
       />
       <List name="sidebar" list={ListA} />

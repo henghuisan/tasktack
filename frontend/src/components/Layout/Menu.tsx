@@ -64,36 +64,38 @@ const Menu: React.FC = () => {
 
   const getTaskList = (completed: boolean) => {
     const currentMoment = moment();
-    
-    let filteredTasks = tasks.filter(task => task.completed === completed);
-  
+
+    let filteredTasks = tasks.filter((task) => task.completed === completed);
+
     switch (category) {
       case "today":
-        filteredTasks = filteredTasks.filter(task => moment(task.due_date).isSameOrBefore(currentMoment, "day"));
+        filteredTasks = filteredTasks.filter((task) =>
+          moment(task.due_date).isSameOrBefore(currentMoment, "day")
+        );
         break;
       case "week":
         const next7Days = currentMoment.clone().add(7, "days");
-        filteredTasks = filteredTasks.filter(task => {
+        filteredTasks = filteredTasks.filter((task) => {
           const dueDateMoment = moment(task.due_date);
           return dueDateMoment.isBetween(currentMoment, next7Days, "day", "[]");
         });
         break;
       default:
         if (category !== "all" && category !== "completed") {
-          filteredTasks = filteredTasks.filter(task => task.category === category);
+          filteredTasks = filteredTasks.filter(
+            (task) => task.category === category
+          );
         }
         break;
     }
-  
+
     return filteredTasks;
   };
-  
 
   useLayoutEffect(() => {
     const pathSegments = location.pathname.split("/"); // Split the pathname by "/"
     const lastPathSegment = pathSegments[pathSegments.length - 1]; // Get the last segment
     setCategory(lastPathSegment); // Get the last segment
-
     dispatch(fetchTasks());
   }, [dispatch, location]);
 
