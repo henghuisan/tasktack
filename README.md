@@ -39,22 +39,27 @@ It allows users to organize their tasks and to-do items efficiently.
 ## 🛠️ Getting Started
 
 ### Step 1: Prerequisite
+Before you begin, ensure you have the following requirements in place:
 
-### Clone Repository
-```
+- **Python**: Install Python from the [Python website](https://www.python.org/downloads/).
+
+- **Node.js**: Download Node.js from the [Node.js website](https://nodejs.org/).
+
+- **npm**: Ensure npm is up to date by running:
+  ```sh
+  npm install -g npm
+  ```
+- **MongoDB**: Create account from the [MongoDB website](https://www.mongodb.com/).
+
+### Step 2: Clone Repository
+Clone this repository to your local machine using:
+
+``` bash
 git https://github.com/henghuisan/tasktack.git
 ```
 
-### Step 2: Frontend ####
-To run the frontend of TaskTack locally, follow these steps:
+Now, navigate to the cloned directory:
 
-```bash
-cd frontend
-npm install
-npm start
-```
-
-Open your browser and visit http://localhost:3000.
 
 ### Step 3: Backend Setup 
 To run the backend of TaskTack locally, follow these steps:
@@ -70,7 +75,7 @@ Create a virtual environment:
 
 - On macOS and Linux:
 ``` bash
-python3 -m venv venv
+python4 -m venv venv
 source venv/bin/activate
 ```
 
@@ -100,6 +105,20 @@ Start the development server and run the app:
 ```bash
 python manage.py runserver
 ```
+
+Open your browser and visit http://127.0.0.1:8000/api/ to manage CRUD operation.
+
+
+### Step 4: Frontend
+To run the frontend of TaskTack locally, follow these steps:
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+Open your browser and visit http://localhost:3000
 
 ## ☎️ Contact
 
