@@ -68,9 +68,7 @@ const taskSlice = createSlice({
             state.taskFormData.category = action.payload;
         },
         setDueDate: (state, action: PayloadAction<string | null>) => {
-        // setDueDate: (state, action) => {
-            // state.taskFormData.due_date = new Date(action.payload);
-            state.taskFormData.due_date  = action.payload
+            state.taskFormData.due_date = action.payload
         },
         setCompleted: (state, action: PayloadAction<boolean>) => {
             state.taskFormData.completed = action.payload;
@@ -79,13 +77,7 @@ const taskSlice = createSlice({
             // Assuming `action.payload` is an array of SubTask objects
             // You should directly replace the existing subtasks array
             state.task.subtasks.push(action.payload);
-          },
-          
-        // setFormData: (state, action: PayloadAction<Task>) => {
-        //     state.taskFormData = { ...action.payload };
-        //     console.log(action.payload);
-
-        // },
+        },
         resetForm: (state) => {
             state.taskFormData = { ...initialTaskFormState }
         }

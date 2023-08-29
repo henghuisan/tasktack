@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -10,6 +10,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SortIcon from "@mui/icons-material/Sort";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import grey from "@mui/material/colors/grey";
+import { useLocation } from "react-router-dom";
 
 interface HeaderProps {
   handleMenu: () => void;
@@ -17,6 +18,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ handleMenu, open }: HeaderProps) => {
+  const [title, setTitle] = useState("All");
   const [sortAnchorEl, setSortAnchorEl] = useState<HTMLButtonElement | null>(
     null
   );
@@ -24,6 +26,18 @@ const Header: React.FC<HeaderProps> = ({ handleMenu, open }: HeaderProps) => {
     useState<HTMLButtonElement | null>(null);
   const openSortPopover = Boolean(sortAnchorEl);
   const openFilterPopover = Boolean(filterAnchorEl);
+  let location = useLocation();
+
+  useEffect(() => {
+    const pathSegments = location.pathname.split("/");
+    const lastPathSegment = pathSegments[pathSegments.length - 1];
+    // Add to <b>{selectedItem[0].toUpperCase() + selectedItem.slice(1)}</b>
+    const value =
+      lastPathSegment == "week"
+        ? "Next 7 Days"
+        : lastPathSegment[0].toUpperCase() + lastPathSegment.slice(1);
+    setTitle(value);
+  }, [location, setTitle]);
 
   return (
     <AppBar
@@ -49,7 +63,7 @@ const Header: React.FC<HeaderProps> = ({ handleMenu, open }: HeaderProps) => {
           component="div"
           sx={{ flexGrow: 1 }}
         >
-          All
+          {title}
         </Typography>
         <>
           <Tooltip title="Sort" placement="bottom">

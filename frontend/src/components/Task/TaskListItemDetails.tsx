@@ -35,7 +35,7 @@ const TaskListItemDetails: React.FC<TaskListItemDetailsProps> = ({
             sx={{ fontSize: 13 }}
             mr={1}
           >
-            {item.key}
+            {item.title}
           </Typography>
         </Box>
       );
