@@ -5,7 +5,8 @@ is a simple task management application inspired by
 <a href="https://www.ticktick.com/" target="_blank">TickTick</a>.
 It allows users to organize their tasks and to-do items efficiently.
 
-![TaskTack](https://github.com/henghuisan/tasktack/assets/76814491/8a532139-819b-4d1a-8db5-b199fb0ddfd7)
+![TaskTack](https://github.com/henghuisan/tasktack/assets/76814491/c2ca55d2-f768-437a-be6b-50bf5261d63d)
+
 
 ## Table of Contents
 
