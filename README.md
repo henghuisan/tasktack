@@ -57,7 +57,7 @@ Before you begin, ensure you have the following requirements in place:
 Clone this repository to your local machine using:
 
 ``` bash
-git https://github.com/henghuisan/tasktack.git
+git clone https://github.com/henghuisan/tasktack.git
 ```
 
 Now, navigate to the cloned directory:
